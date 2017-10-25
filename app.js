@@ -70,7 +70,7 @@ function downloadImage(url,cb){
             res.on('end',()=>{
                 var data = Buffer.concat(raw);
                 var filename = url.split('/').pop();
-                fs.writeFileSync(DOWNLOAD_PATH+filename,data);
+                fs.writeFileSync(getDownloadDirectory()+filename,data);
                 console.info(`${filename} downloaded`);
                 cb && cb(true);
             });
@@ -79,4 +79,17 @@ function downloadImage(url,cb){
             cb && cb(false);
         }
     });
+}
+
+function getDownloadDirectory(){
+    var path = DOWNLOAD_PATH;
+    if(DOWNLOAD_PATH.charAt(0) !=='/' ){
+        path = __dirname+'/'+DOWNLOAD_PATH;
+    }
+    if(fs.existsSync(path)){
+        return path;
+    }else{
+        fs.mkdirSync(path);
+        return path;
+    }
 }
