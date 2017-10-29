@@ -4,8 +4,8 @@ const fs = require('fs');
 const DOWNLOAD_PATH = 'images/';
 
 getUrl({
-    idx:1,
-    n:10
+    idx:0,
+    n:1
 },(urls)=>{
     let successCouter = 0;
     let failCounter = 0;
@@ -20,8 +20,8 @@ getUrl({
 })
 
 function getUrl(opt,cb){
-    var url = `http://www.bing.com/HPImageArchive.aspx?format=js&idx=${opt.idx || 1}&n=${opt.n || 1}&nc=${Date.now()}&pid=hp`;
-
+    var url = `http://www.bing.com/HPImageArchive.aspx?format=js&idx=${opt.idx || 0}&n=${opt.n || 1}&nc=${Date.now()}&pid=hp`;
+    console.info(`fetching data from json api...${url}`);
     http.get(url, (res) => {
         const { statusCode } = res;
         const contentType = res.headers['content-type'];
